@@ -1,0 +1,100 @@
+<html>
+<head>
+    <style>
+        body {
+            overflow: hidden;
+        }
+        .img_load {
+            visibility: hidden;
+        }
+        canvas {
+            border: 1px solid #DDD;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="mycanvas" width="600" height="600"></canvas>
+    <img id="blank_map" class="img_load" src="blank_map.png" />
+    <img id="map" class="img_load" src="map.png" />
+
+<script>
+    // globals
+    let c, ctx, blank, colour;
+
+    // map properties
+    let w = 600;
+    let h = 600;
+
+    // grid properties
+    let rows = 100;
+    let cols  = 100;
+    let size = w/cols;
+
+    function drawSquare(row, col) {
+        // draws a square of colour at the given cell
+        let x = col * size;
+        let y = h - (row * size);
+
+        ctx.drawImage(
+            colour, // img
+            x,     // sx
+            y,     // sy
+            size,  // swidth
+            size,   // sheight
+            x,     // x
+            y,     // y
+            size,   // width
+            size    // height
+        );
+
+    }
+
+    window.onload = function() {
+
+        // context
+        c = document.getElementById("mycanvas");
+        ctx = c.getContext("2d");
+
+        // maps
+        blank  = document.getElementById("blank_map");
+        colour = document.getElementById("map");
+
+        ctx.drawImage(
+            blank, // img
+            0,     // sx
+            0,     // sy
+            600,  // swidth
+            600,   // sheight
+            0,     // x
+            0,     // y
+            600,   // width
+            600    // height
+        );
+
+        c.addEventListener("mousemove", function(e) {
+
+            // mouse position
+            let mx = e.clientX - 8;
+            let my = h - (e.clientY - 8);
+
+            // mouse row and col
+            let mr = Math.floor((my/h) * rows);
+            let mc = Math.floor((mx/w) * cols);
+
+            let d = 4;
+            for (let i = -d; i <= d; i++) {
+                for (let j = -d; j <= d; j++) {
+                    drawSquare(mr + i, mc + j);
+                }
+            }
+
+        });
+
+    };
+
+</script>
+</body>
+</html>
