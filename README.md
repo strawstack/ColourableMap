@@ -4,7 +4,7 @@ A Javascript map that can be coloured
 
 # Live Demo
 
-here
+[here](https://strawstack.github.io/ColourableMap/)
 
 # ScreenShot
 
